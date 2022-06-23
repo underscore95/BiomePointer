@@ -1,0 +1,18 @@
+main: me.unfear.BiomePointer.BiomePointer
+name: BiomePointer
+version: 0.0.1
+author: unfear
+api-version: 1.13
+commands:
+   biomepointer:
+      permission: biomepointer.give
+      description: Give yourself or another player a Biome Pointer!
+   biomecache:
+      permission: biomepointer.admin
+      description: Cache related commands.
+   biometp:
+      permission: biomepointer.tp
+      description: Teleport to a biome!
+   biomelist:
+      permission: biomepointer.list
+      description: List all biomes in config.yml
