@@ -32,3 +32,13 @@ biomes:
  - SNOWY_PLAINS
  - SWAMP
  - WARM_OCEAN
+
+recipe:
+ enabled: false
+ shape: # Leave a space for air, define what items map to what letters under ingredients section
+  - ' D '
+  - 'DCD'
+  - ' D '
+ ingredients:
+  D: DIAMOND
+  C: COMPASS
