@@ -10,6 +10,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 public class ConfigLoader {
 
 	private int searchDistance, cacheDistance;
+	private long updateTime;
 	private HashSet<Biome> biomes;
 
 	public ConfigLoader() {
@@ -18,8 +19,9 @@ public class ConfigLoader {
 		final FileConfiguration config = BiomePointer.inst.getConfig();
 		this.biomes = new HashSet<>();
 
-		this.searchDistance = config.getInt("search-distance");
-		this.cacheDistance = config.getInt("cache-distance");
+		this.searchDistance = config.getInt("search-distance", 2000);
+		this.cacheDistance = config.getInt("cache-distance", 5000);
+		this.updateTime = config.getLong("update-time", 20);
 
 		if (this.cacheDistance <= this.searchDistance) {
 			BiomePointer.inst.getLogger().severe("cache-distance must be greater than search-distance");
@@ -29,6 +31,12 @@ public class ConfigLoader {
 
 		if (this.searchDistance <= 100) { // no need to check cache-distance, as it's greater than search-distance atm
 			BiomePointer.inst.getLogger().severe("cache-distance and search-distance must be >100");
+			BiomePointer.inst.getServer().getPluginManager().disablePlugin(BiomePointer.inst);
+			return;
+		}
+
+		if (updateTime <= 0) {
+			BiomePointer.inst.getLogger().severe("update-time must be greater than 0");
 			BiomePointer.inst.getServer().getPluginManager().disablePlugin(BiomePointer.inst);
 			return;
 		}
@@ -64,5 +72,9 @@ public class ConfigLoader {
 
 	public HashSet<Biome> getBiomes() {
 		return biomes;
+	}
+
+	public long getUpdateTime() {
+		return updateTime;
 	}
 }

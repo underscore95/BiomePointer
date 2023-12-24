@@ -16,6 +16,6 @@ public class ItemInteractListener implements Listener {
 		if (!BiomePointer.inst.isBiomePointer(e.getPlayer().getInventory().getItemInMainHand())) 
 			return;
 		
-		BiomePointerSelectionMenu.create(e.getItem(), 0).show(e.getPlayer());
+		BiomePointerSelectionMenu.create(0).show(e.getPlayer());
 	}
 }

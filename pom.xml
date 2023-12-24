@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>me.unfear.BiomePointer</groupId>
 	<artifactId>BiomePointer</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<name>BiomePointer</name>
 
 	<properties>
@@ -29,11 +29,11 @@
 					<relocations>
 						<relocation>
 							<pattern>de.tr7zw.changeme.nbtapi</pattern>
-							<shadedPattern>me.unfear.Slayer.nbtapi</shadedPattern>
+							<shadedPattern>me.unfear.nbtapi</shadedPattern>
 						</relocation>
 						<relocation>
 							<pattern>com.github.stefvanschie.inventoryframework</pattern>
-							<shadedPattern>me.unfear.Slayer.inventoryframework</shadedPattern>
+							<shadedPattern>me.unfear.inventoryframework</shadedPattern>
 						</relocation>
 					</relocations>
 

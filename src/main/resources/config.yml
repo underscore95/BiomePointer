@@ -1,10 +1,14 @@
 
-# Note that higher values will increase lag, although will make the Biome Pointer better at locating biomes. (and possibly too op)
+# Note that higher values will increase lag, though will make the Biome Pointer better at locating biomes. (and possibly too op)
 # cache-distance must be greater than search-distance, both values must be greater than 100
 search-distance: 2000 # If the plugin doesn't already know about a biome then it will search for one within this distance of the player
 cache-distance: 5000 # If the plugin already knows about a biome, the Biome Pointer will only point towards the biome if it's within this distance of the player
 
-# Note that while the Biome Pointer can locate non-overworld biomes, compasses cannot point towards them.
+# How often should compasses be updated in ticks? (20 ticks = 1 second)
+# Higher values will reduce lag
+update-time: 20
+
+# Note that while the Biome Pointer can locate non-overworld biomes, compasses cannot point towards them. (minecraft limitation)
 biomes:
 # A list of biomes that the Biome Pointer can look for.
 # List of valid biomes: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/block/Biome.html

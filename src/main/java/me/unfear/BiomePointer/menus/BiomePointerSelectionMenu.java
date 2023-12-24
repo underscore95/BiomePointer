@@ -2,6 +2,7 @@ package me.unfear.BiomePointer.menus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -28,34 +29,35 @@ public class BiomePointerSelectionMenu {
 		final ArrayList<ItemStack> biomes = new ArrayList<>();
 		for (Biome biome : BiomePointer.inst.getConfigLoader().getBiomes()) {
 			final ItemStack item = new ItemStack(Material.PAPER);
-			final ItemMeta meta = item.getItemMeta();
+			final ItemMeta meta = Objects.requireNonNull(item.getItemMeta());
 			meta.setDisplayName(ChatColor.BLUE + Utils.prettifyEnum(biome));
 			item.setItemMeta(meta);
 
-			final NBTItem nbt = new NBTItem(item, true);
+			final NBTItem nbt = new NBTItem(item);
 			nbt.setString(NBT_BIOME, biome.toString());
+			nbt.applyNBT(item);
 
 			biomes.add(item);
 		}
 		return biomes;
 	}
 
-	public static ChestGui create(ItemStack item, int page) {
+	public static ChestGui create(int page) {
 
 		final ChestGui gui = new ChestGui(6, ChatColor.GRAY + "Select Biome");
 
 		final ItemStack background = new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-		final ItemMeta backgroundMeta = background.getItemMeta();
+		final ItemMeta backgroundMeta = Objects.requireNonNull(background.getItemMeta());
 		backgroundMeta.setDisplayName(ChatColor.RED + " ");
 		background.setItemMeta(backgroundMeta);
 
 		final ItemStack prevArrow = new ItemStack(Material.ARROW);
-		final ItemMeta prevArrowMeta = prevArrow.getItemMeta();
+		final ItemMeta prevArrowMeta = Objects.requireNonNull(prevArrow.getItemMeta());
 		prevArrowMeta.setDisplayName(ChatColor.GRAY + "Previous Page");
 		prevArrow.setItemMeta(prevArrowMeta);
 
 		final ItemStack nextArrow = new ItemStack(Material.ARROW);
-		final ItemMeta nextArrowMeta = nextArrow.getItemMeta();
+		final ItemMeta nextArrowMeta = Objects.requireNonNull(nextArrow.getItemMeta());
 		nextArrowMeta.setDisplayName(ChatColor.GRAY + "Next Page");
 		nextArrow.setItemMeta(nextArrowMeta);
 
@@ -64,6 +66,7 @@ public class BiomePointerSelectionMenu {
 		PaginatedPane pages = new PaginatedPane(0, 0, 9, 5);
 		pages.populateWithItemStacks(getBiomes());
 		pages.setOnClick(event -> {
+			if (event.getCurrentItem() == null) return;
 			event.getWhoClicked().closeInventory();
 			
 			// make sure player still has the pointer
@@ -75,17 +78,18 @@ public class BiomePointerSelectionMenu {
 			
 			// set biome
 			final NBTItem nbt = new NBTItem(event.getCurrentItem());
-			if (!nbt.hasKey(NBT_BIOME))
+			if (!nbt.hasTag(NBT_BIOME))
 				return;
 			final String biomeName = nbt.getString(NBT_BIOME);
 
 			event.getWhoClicked().sendMessage(
 					ChatColor.GRAY + "Searching for " + ChatColor.AQUA + Utils.prettifyEnum(biomeName));
 
-			final NBTItem heldItemNBT = new NBTItem(held, true);
+			final NBTItem heldItemNBT = new NBTItem(held);
 			heldItemNBT.setString(BiomePointer.NBT_BIOME, biomeName);
+			heldItemNBT.applyNBT(held);
 			
-			final ItemMeta meta = held.getItemMeta();
+			final ItemMeta meta = Objects.requireNonNull(held.getItemMeta());
 			meta.setLore(Arrays.asList(ChatColor.translateAlternateColorCodes('&', "&7Searching for: &b" + Utils.prettifyEnum(biomeName)), ChatColor.GRAY + "Right click to set biome"));
 			held.setItemMeta(meta);
 		});
@@ -106,7 +110,7 @@ public class BiomePointerSelectionMenu {
 		if (page > 0) {
 			navigation.addItem(new GuiItem(prevArrow, event -> {
 				if (pages.getPage() > 0) {
-					create(item, page - 1).show(event.getWhoClicked());
+					create(page - 1).show(event.getWhoClicked());
 				}
 			}), 0, 0);
 		}
@@ -114,7 +118,7 @@ public class BiomePointerSelectionMenu {
 		if (pages.getPage() < pages.getPages() - 1) {
 			navigation.addItem(new GuiItem(new ItemStack(nextArrow), event -> {
 				if (pages.getPage() < pages.getPages() - 1) {
-					create(item, page + 1).show(event.getWhoClicked());
+					create(page + 1).show(event.getWhoClicked());
 				}
 			}), 8, 0);
 		}

@@ -1,6 +1,6 @@
 main: me.unfear.BiomePointer.BiomePointer
 name: BiomePointer
-version: 0.0.2
+version: 0.0.3
 author: unfear
 api-version: 1.20
 commands:

@@ -49,6 +49,6 @@ public class BiomePointerManager {
 					
 				}
 			}
-		}.runTaskTimer(BiomePointer.inst, 20, 20);
+		}.runTaskTimer(BiomePointer.inst, BiomePointer.inst.getConfigLoader().getUpdateTime(), BiomePointer.inst.getConfigLoader().getUpdateTime());
 	}
 }
