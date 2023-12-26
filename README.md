@@ -1,4 +1,4 @@
 # BiomePointer
-https://www.spigotmc.org/resources/biomepointer.102823/
+https://modrinth.com/plugin/biomepointer
 
 You can contact me on discord at: unfear_
